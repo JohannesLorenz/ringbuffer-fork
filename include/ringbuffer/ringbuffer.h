@@ -24,11 +24,14 @@
 #include <cstddef>
 #include <algorithm>
 
+// let CMake define RINGBUFFER_EXPORT
+#include "ringbuffer_export.h"
+
 template<class T>
 class ringbuffer_t;
 
 //! common variables for both reader and writer
-class ringbuffer_common_t
+class RINGBUFFER_EXPORT ringbuffer_common_t
 {
 private:
 	static std::size_t calc_size(std::size_t sz);
@@ -43,7 +46,7 @@ public:
 //       especially, they are template-free and their code can easily
 //       be moved into cpp files
 
-class ringbuffer_base : protected ringbuffer_common_t
+class RINGBUFFER_EXPORT ringbuffer_base : protected ringbuffer_common_t
 {
 	bool mlocked = false;
 
@@ -98,7 +101,7 @@ private:
 
 //! TODO: specialization for only one reader
 template<class T>
-class ringbuffer_t : public ringbuffer_base
+class RINGBUFFER_EXPORT ringbuffer_t : public ringbuffer_base
 {
 public:
 	using value_type = T;
@@ -210,7 +213,7 @@ constexpr T2 if_than_or_zero(const bool& i1, const T2& i2) {
 
 }
 
-class ringbuffer_reader_base : protected ringbuffer_common_t
+class RINGBUFFER_EXPORT ringbuffer_reader_base : protected ringbuffer_common_t
 {
 protected:
 	std::size_t read_ptr = 0; //!< reader at buf[read_ptr]
@@ -226,7 +229,7 @@ protected:
 };
 
 template<class T>
-class ringbuffer_reader_t : public ringbuffer_reader_base
+class RINGBUFFER_EXPORT ringbuffer_reader_t : public ringbuffer_reader_base
 {
 	const T* buf;
 	ringbuffer_t<T>* ref;

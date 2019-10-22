@@ -5,6 +5,8 @@ file(GLOB ringbuffer_lib_src ${src_dir}/*.cpp)
 file(GLOB ringbuffer_lib_hdr ${src_dir}../../include/ringbuffer/*.h)
 
 add_library(ringbuffer SHARED ${ringbuffer_lib_src} ${ringbuffer_lib_hdr})
+generate_export_header(ringbuffer)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 install(TARGETS ringbuffer
 	LIBRARY DESTINATION ${INSTALL_LIB_DIR}
